@@ -18,6 +18,7 @@ services:
       - redis
       - mysql
       - mailhog
+      - vue
     networks:
       - laravel
 
@@ -75,7 +76,7 @@ services:
       - laravel
 
   npm:
-    image: node:13.7
+    image: node:alpine
     container_name: npm
     volumes:
       - ./src:/var/www/html
@@ -84,6 +85,23 @@ services:
       - 3001:3001
     working_dir: /var/www/html
     entrypoint: ['npm']
+    networks:
+      - laravel
+
+  vue:
+    build:
+      context: .
+      dockerfile: vue.dockerfile
+    container_name: vue
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./client:/app
+    working_dir: /app
+    entrypoint: ['npm', 'run', 'dev']
+    environment:
+      - HOST=0.0.0.0
+      - poll=true
     networks:
       - laravel
 
