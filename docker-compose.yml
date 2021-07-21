@@ -105,6 +105,23 @@ services:
     networks:
       - laravel
 
+  fcmlib:
+    build:
+      context: .
+      dockerfile: vue.dockerfile
+    container_name: fcmlib
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./fcmlib:/app
+    working_dir: /app
+    entrypoint: ['npm', 'run', 'serve']
+    environment:
+      - HOST=0.0.0.0
+      - poll=true
+    networks:
+      - laravel
+
   artisan:
     build:
       context: .
