@@ -14,11 +14,11 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
-      - php
+      - api
+      - admin
       - redis
       - mysql
       - mailhog
-      - vue
     networks:
       - laravel
 
@@ -41,11 +41,21 @@ services:
     networks:
       - laravel
 
-  php:
+  api:
     build:
       context: .
       dockerfile: php.dockerfile
-    container_name: php
+    container_name: api
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - laravel
+
+  admin:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: admin
     volumes:
       - ./src:/var/www/html:delegated
     networks:
@@ -67,9 +77,7 @@ services:
     container_name: composer
     volumes:
       - ./src:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php
+#    working_dir: /var/www/html
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
@@ -83,21 +91,21 @@ services:
     ports:
       - 3000:3000
       - 3001:3001
-    working_dir: /var/www/html
+#    working_dir: /var/www/html
     entrypoint: ['npm']
     networks:
       - laravel
 
-  vue:
+  client:
     build:
       context: .
       dockerfile: vue.dockerfile
     container_name: vue
     ports:
-      - "8080:8080"
+      - "8090:8080"
     volumes:
-      - ./client:/app
-    working_dir: /app
+      - ./src/:/app
+    working_dir: /app/client
     entrypoint: ['npm', 'run', 'dev']
     environment:
       - HOST=0.0.0.0
@@ -131,9 +139,9 @@ services:
       - ./src:/var/www/html:delegated
     depends_on:
       - mysql
-    working_dir: /var/www/html
+#    working_dir: /var/www/html
     user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
+    entrypoint: ['php', 'artisan']
     networks:
       - laravel
 

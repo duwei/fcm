@@ -13,5 +13,5 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('games', GameController::class);
-
+    $router->resource('game-users', GameUserController::class);
 });
