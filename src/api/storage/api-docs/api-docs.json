@@ -1,0 +1,381 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FCMApi",
+        "contact": {
+            "email": "duwei@wemade.com"
+        },
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/api/get_game": {
+            "get": {
+                "tags": [
+                    "GameServer"
+                ],
+                "summary": "get game configuration",
+                "operationId": "get_game",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/GetGame"
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Game"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/get_user": {
+            "get": {
+                "tags": [
+                    "GameClient"
+                ],
+                "summary": "get user status",
+                "operationId": "get_user",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/GetUser"
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserStatus"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "FcmClient"
+                ],
+                "summary": "user login",
+                "operationId": "login",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/GetUser"
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserStatus"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "GameClient"
+                ],
+                "summary": "user login",
+                "operationId": "logout",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/GetUser"
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "FcmClient"
+                ],
+                "summary": "user login",
+                "operationId": "register_user",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/RegisterUser"
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserStatus"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Game": {
+                "properties": {
+                    "name": {
+                        "description": "Game name",
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "description": "Game uuid",
+                        "type": "string"
+                    },
+                    "min_age": {
+                        "description": "Minimum player age",
+                        "type": "integer"
+                    },
+                    "open_time": {
+                        "description": "Game open time",
+                        "type": "string"
+                    },
+                    "close_time": {
+                        "description": "Game close time",
+                        "type": "string"
+                    },
+                    "max_hour_weekday": {
+                        "description": "Maximum game hours in weekday",
+                        "type": "number"
+                    },
+                    "max_hour_weekend": {
+                        "description": "Maximum game hours in weekend",
+                        "type": "number"
+                    },
+                    "max_money_daily": {
+                        "description": "Maximum daily recharge amount",
+                        "type": "number"
+                    },
+                    "max_money_monthly": {
+                        "description": "Maximum monthly recharge amount",
+                        "type": "number"
+                    },
+                    "start_prompt": {
+                        "description": "start prompt",
+                        "type": "string"
+                    },
+                    "out_of_time_prompt": {
+                        "description": "out of time prompt",
+                        "type": "string"
+                    },
+                    "time_limit_prompt": {
+                        "description": "time limit prompt",
+                        "type": "string"
+                    },
+                    "money_limit_prompt": {
+                        "description": "money limit prompt",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "GameUser": {
+                "required": [
+                    "CharacterUID",
+                    "CharacterName",
+                    "Class",
+                    "Lev",
+                    "CombatPoint",
+                    "StageIdx"
+                ],
+                "properties": {
+                    "account": {
+                        "description": "Game user account",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Game user name",
+                        "type": "string"
+                    },
+                    "id_card": {
+                        "description": "Game user id card",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserStatus": {
+                "properties": {
+                    "account": {
+                        "description": "Game user account",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Game user name",
+                        "type": "string"
+                    },
+                    "id_card": {
+                        "description": "Game user id card",
+                        "type": "string"
+                    },
+                    "remain_time_quota": {
+                        "description": "remaining time quota",
+                        "type": "number"
+                    },
+                    "remain_money_quota": {
+                        "description": "remaining money quota",
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "requestBodies": {
+            "GetGame": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "uuid": {
+                                    "description": "game uuid",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "example": {
+                            "uuid": "84371b23-3d29-4f09-b533-6ca9dcc1d079"
+                        }
+                    }
+                }
+            },
+            "GetUser": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "user_token": {
+                                    "description": "user token",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "example": {
+                            "user_token": "84371b23-3d29-4f09-b533-6ca9dcc1d079"
+                        }
+                    }
+                }
+            },
+            "RegisterUser": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "account": {
+                                    "description": "user account",
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "description": "user password",
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "description": "user name",
+                                    "type": "string"
+                                },
+                                "id_card": {
+                                    "description": "user id card",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object",
+                            "example": {
+                                "account": "mir4account",
+                                "password": "password",
+                                "name": "张三",
+                                "id_card": "330329199001020022"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
