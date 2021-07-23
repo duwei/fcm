@@ -18,11 +18,9 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group([], function () use ($router) {
+    $router->post('get_game', 'FcmController@getGame');
+    $router->post('register', 'FcmController@register');
     $router->post('login', 'FcmController@login');
-    $router->post('set_config_version', 'FcmController@SetVersion');
-    $router->post('set_maintenance_mode', 'FcmController@SetMaintenance');
-    $router->post('send_cmd_to_all_server', 'FcmController@SendCmdToAllServer');
-    $router->post('get_server_list', 'FcmController@ListAllServers');
-    $router->post('get_server_status', 'FcmController@GetServerStatus');
-    $router->get('game_data_version', 'FcmController@GetDataVersion');
+    $router->post('logout', 'FcmController@logout');
+    $router->post('get_user', 'FcmController@getUser');
 });

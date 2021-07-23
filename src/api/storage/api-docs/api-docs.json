@@ -9,7 +9,7 @@
     },
     "paths": {
         "/api/get_game": {
-            "get": {
+            "post": {
                 "tags": [
                     "GameServer"
                 ],
@@ -47,7 +47,7 @@
             }
         },
         "/api/get_user": {
-            "get": {
+            "post": {
                 "tags": [
                     "GameClient"
                 ],
@@ -92,7 +92,7 @@
                 "summary": "user login",
                 "operationId": "login",
                 "requestBody": {
-                    "$ref": "#/components/requestBodies/GetUser"
+                    "$ref": "#/components/requestBodies/Login"
                 },
                 "responses": {
                     "200": {
@@ -111,7 +111,8 @@
                                             "example": "OK"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/UserStatus"
+                                            "description": "access token",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -127,7 +128,7 @@
                 "tags": [
                     "GameClient"
                 ],
-                "summary": "user login",
+                "summary": "user logout",
                 "operationId": "logout",
                 "requestBody": {
                     "$ref": "#/components/requestBodies/GetUser"
@@ -162,7 +163,7 @@
                 "tags": [
                     "FcmClient"
                 ],
-                "summary": "user login",
+                "summary": "user register",
                 "operationId": "register_user",
                 "requestBody": {
                     "$ref": "#/components/requestBodies/RegisterUser"
@@ -325,20 +326,43 @@
                     }
                 }
             },
-            "GetUser": {
+            "Login": {
                 "content": {
                     "application/json": {
                         "schema": {
                             "properties": {
-                                "user_token": {
-                                    "description": "user token",
+                                "account": {
+                                    "description": "user account",
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "description": "user password",
                                     "type": "string"
                                 }
                             },
                             "type": "object"
                         },
                         "example": {
-                            "user_token": "84371b23-3d29-4f09-b533-6ca9dcc1d079"
+                            "account": "mir4account",
+                            "password": "password"
+                        }
+                    }
+                }
+            },
+            "GetUser": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "access_token": {
+                                    "description": "user access token",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "example": {
+                            "access_token": "84371b23-3d29-4f09-b533-6ca9dcc1d079"
                         }
                     }
                 }

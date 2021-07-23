@@ -21,19 +21,45 @@
 
 /**
  *   @OA\RequestBody(
+ *       request="Login",
+ *       @OA\MediaType(
+ *          mediaType="application/json",
+ *          @OA\Schema(
+ *              type="object",
+ *              @OA\Property(
+ *                  property="account",
+ *                  description="user account",
+ *                  type="string"
+ *              ),
+ *              @OA\Property(
+ *                  property="password",
+ *                  description="user password",
+ *                  type="string"
+ *              ),
+ *          ),
+ *          example={
+ *             "account": "mir4account",
+ *             "password": "password",
+ *          }
+ *       )
+ *   )
+ */
+
+/**
+ *   @OA\RequestBody(
  *       request="GetUser",
  *       @OA\MediaType(
  *          mediaType="application/json",
  *          @OA\Schema(
  *              type="object",
  *              @OA\Property(
- *                  property="user_token",
- *                  description="user token",
+ *                  property="access_token",
+ *                  description="user access token",
  *                  type="string"
  *              ),
  *          ),
  *          example={
- *             "user_token": "84371b23-3d29-4f09-b533-6ca9dcc1d079",
+ *             "access_token": "84371b23-3d29-4f09-b533-6ca9dcc1d079",
  *          }
  *       )
  *   )

@@ -63,16 +63,16 @@ class GameUser extends Model
     use HasFactory;
 
     protected $fillable = [
-        'account', 'name', 'password', 'id_card'
+        'account', 'name', 'password', 'id_card', 'game_id'
     ];
 
     protected $hidden = [
-        'password'
+        'password', 'created_at', 'updated_at', 'id', 'game_id'
     ];
 
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = app('hash')->make($value);
     }
 
     public function game() {

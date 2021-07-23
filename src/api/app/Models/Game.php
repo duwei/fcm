@@ -81,6 +81,14 @@ class Game extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'id',
+        'key',
+        'created_at',
+        'updated_at',
+        'uuid',
+    ];
+
     public static function boot()
     {
         parent::boot();
