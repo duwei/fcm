@@ -102,13 +102,14 @@ services:
       dockerfile: vue.dockerfile
     container_name: vue
     ports:
-      - "8090:8080"
+      - "8090:8090"
     volumes:
       - ./src/:/app
     working_dir: /app/client
     entrypoint: ['npm', 'run', 'dev']
     environment:
       - HOST=0.0.0.0
+      - PORT=8090
       - poll=true
     networks:
       - laravel

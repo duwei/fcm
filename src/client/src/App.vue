@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <van-tabs>
+      <van-tab title="登 陆">
+        <Login></Login>
+      </van-tab>
+      <van-tab title="注 册">
+        <Register></Register>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Login from './components/Login'
+import Register from './components/Register'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Login,
+    Register
   }
 }
 </script>

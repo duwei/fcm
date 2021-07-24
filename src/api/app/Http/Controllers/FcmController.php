@@ -38,6 +38,7 @@ class FcmController extends Controller
     const BAD_REQUEST         = 1;
     const UNAUTHORIZED        = 2;
     const MAINTENANCE         = 3;
+    const DUPLICATED          = 4;
 
     private function makeResponse($code, $msg, $data = null)
     {
@@ -289,8 +290,8 @@ class FcmController extends Controller
      *     ),
      *     @OA\Property(
      *     property="data",
-     *     type="object",
-     *     ref="#/components/schemas/UserStatus",
+     *     type="string",
+     *     description="access token",
      *      )
      *     )
      *    ),
@@ -315,7 +316,15 @@ class FcmController extends Controller
 //        } catch (\Exception $e) {
 //            return $this->makeBadRequestResponse();
 //        }
-        return $this->makeApiResponse($this->getRemain($game_user));
+        if ($game_user->wasRecentlyCreated) {
+            $access_token = Str::uuid()->toString();
+            Redis::set($access_token, $game_user->account);
+            Redis::set($game_user->account, $access_token);
+            return $this->makeApiResponse($access_token);
+        } else {
+            return $this->makeResponse(self::DUPLICATED, '重复注册');
+        }
     }
-
+    public function success(){
+    }
 }
