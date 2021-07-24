@@ -185,7 +185,8 @@
                                             "example": "OK"
                                         },
                                         "data": {
-                                            "$ref": "#/components/schemas/UserStatus"
+                                            "description": "access token",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
