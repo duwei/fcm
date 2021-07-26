@@ -35,8 +35,10 @@ class GameController extends AdminController
         $grid->column('close_time', __('Close time'));
         $grid->column('max_hour_weekday', __('Max hour weekday'));
         $grid->column('max_hour_weekend', __('Max hour weekend'));
-        $grid->column('max_money_daily', __('Max money daily'));
+        $grid->column('max_money_onetime', __('Max money onetime'));
         $grid->column('max_money_monthly', __('Max money monthly'));
+        $grid->column('max_money_onetime_l2', __('Max money onetime l2'));
+        $grid->column('max_money_monthly_l2', __('Max money monthly l2'));
         $grid->column('start_prompt', __('Start prompt'));
         $grid->column('out_of_time_prompt', __('Out of time prompt'));
         $grid->column('time_limit_prompt', __('Time limit prompt'));
@@ -66,8 +68,10 @@ class GameController extends AdminController
         $show->field('close_time', __('Close time'));
         $show->field('max_hour_weekday', __('Max hour weekday'));
         $show->field('max_hour_weekend', __('Max hour weekend'));
-        $show->field('max_money_daily', __('Max money daily'));
+        $show->field('max_money_onetime', __('Max money onetime'));
         $show->field('max_money_monthly', __('Max money monthly'));
+        $show->field('max_money_onetime_l2', __('Max money onetime l2'));
+        $show->field('max_money_monthly_l2', __('Max money monthly l2'));
         $show->field('start_prompt', __('Start prompt'));
         $show->field('out_of_time_prompt', __('Out of time prompt'));
         $show->field('time_limit_prompt', __('Time limit prompt'));
@@ -94,8 +98,10 @@ class GameController extends AdminController
         $form->timeRange('open_time', 'close_time', __('Open close time'))->rules('required');
         $form->decimal('max_hour_weekday', __('Max hour weekday'))->rules('required');
         $form->decimal('max_hour_weekend', __('Max hour weekend'))->rules('required');
-        $form->decimal('max_money_daily', __('Max money daily'))->rules('required');
+        $form->decimal('max_money_onetime', __('Max money onetime'))->rules('required');
         $form->decimal('max_money_monthly', __('Max money monthly'))->rules('required');
+        $form->decimal('max_money_onetime_l2', __('Max money onetime l2'))->rules('required');
+        $form->decimal('max_money_monthly_l2', __('Max money monthly l2'))->rules('required');
         $form->textarea('start_prompt', __('Start prompt'))->rules('required');
         $form->textarea('out_of_time_prompt', __('Out of time prompt'))->rules('required');
         $form->textarea('time_limit_prompt', __('Time limit prompt'))->rules('required');

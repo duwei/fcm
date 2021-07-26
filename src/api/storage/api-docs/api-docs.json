@@ -230,12 +230,20 @@
                         "description": "Maximum game hours in weekend",
                         "type": "number"
                     },
-                    "max_money_daily": {
-                        "description": "Maximum daily recharge amount",
+                    "max_money_onetime": {
+                        "description": "Maximum onetime recharge amount",
                         "type": "number"
                     },
                     "max_money_monthly": {
                         "description": "Maximum monthly recharge amount",
+                        "type": "number"
+                    },
+                    "max_money_onetime_l2": {
+                        "description": "Maximum onetime recharge amount( 8 <= age < 16 )",
+                        "type": "number"
+                    },
+                    "max_money_monthly_l2": {
+                        "description": "Maximum monthly recharge amount( 16 <= age < 18)",
                         "type": "number"
                     },
                     "start_prompt": {

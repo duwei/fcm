@@ -45,14 +45,24 @@ use Illuminate\Support\Str;
  *          description="Maximum game hours in weekend"
  *      ),
  *      @OA\Property(
- *          property="max_money_daily",
+ *          property="max_money_onetime",
  *          type="number",
- *          description="Maximum daily recharge amount"
+ *          description="Maximum onetime recharge amount"
  *      ),
  *      @OA\Property(
  *          property="max_money_monthly",
  *          type="number",
  *          description="Maximum monthly recharge amount"
+ *      ),
+ *      @OA\Property(
+ *          property="max_money_onetime_l2",
+ *          type="number",
+ *          description="Maximum onetime recharge amount( 8 <= age < 16 )"
+ *      ),
+ *      @OA\Property(
+ *          property="max_money_monthly_l2",
+ *          type="number",
+ *          description="Maximum monthly recharge amount( 16 <= age < 18)"
  *      ),
  *      @OA\Property(
  *          property="start_prompt",
