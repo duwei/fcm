@@ -45,7 +45,16 @@ export default {
         }
       }).then((response) => {
         if (response.data.code === 0) {
-          window.location.href = '/api/success#access_token=' + response.data.data
+          if (response.data.data.title !== '') {
+            Dialog.alert({
+              title: response.data.data.title,
+              message: response.data.data.content
+            }).then(() => {
+              window.location.href = '/api/success#access_token=' + response.data.data.access_token
+            })
+          } else {
+            window.location.href = '/api/success#access_token=' + response.data.data.access_token
+          }
         } else {
           Dialog.alert({
             title: '提示',

@@ -194,8 +194,22 @@ class FcmController extends Controller
      *     ),
      *     @OA\Property(
      *     property="data",
-     *     type="string",
-     *     description="access token",
+     *     type="object",
+     *      @OA\Property(
+     *          property="title",
+     *          type="string",
+     *          description="login prompt title"
+     *      ),
+     *      @OA\Property(
+     *          property="content",
+     *          type="string",
+     *          description="login prompt content"
+     *      ),
+     *      @OA\Property(
+     *          property="access_token",
+     *          type="string",
+     *          description="access token"
+     *      ),
      *      )
      *     )
      *    ),
@@ -220,7 +234,13 @@ class FcmController extends Controller
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
-            return $this->makeApiResponse($access_token);
+            $content = Game::find(1)->start_prompt;
+            $ret = [
+                'title' => '公告',
+                'content' => $content,
+                'access_token' => $access_token
+            ];
+            return $this->makeApiResponse($ret);
         }
         return $this->makeBadRequestResponse();
     }
@@ -292,8 +312,22 @@ class FcmController extends Controller
      *     ),
      *     @OA\Property(
      *     property="data",
-     *     type="string",
-     *     description="access token",
+     *     type="object",
+     *      @OA\Property(
+     *          property="title",
+     *          type="string",
+     *          description="login prompt title"
+     *      ),
+     *      @OA\Property(
+     *          property="content",
+     *          type="string",
+     *          description="login prompt content"
+     *      ),
+     *      @OA\Property(
+     *          property="access_token",
+     *          type="string",
+     *          description="access token"
+     *      ),
      *      )
      *     )
      *    ),
@@ -328,7 +362,13 @@ class FcmController extends Controller
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
-            return $this->makeApiResponse($access_token);
+            $content = Game::find(1)->start_prompt;
+            $ret = [
+                'title' => '公告',
+                'content' => $content,
+                'access_token' => $access_token
+            ];
+            return $this->makeApiResponse($ret);
         } else {
             return $this->makeResponse(self::DUPLICATED, '重复注册');
         }

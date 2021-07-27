@@ -111,8 +111,21 @@
                                             "example": "OK"
                                         },
                                         "data": {
-                                            "description": "access token",
-                                            "type": "string"
+                                            "properties": {
+                                                "title": {
+                                                    "description": "login prompt title",
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "description": "login prompt content",
+                                                    "type": "string"
+                                                },
+                                                "access_token": {
+                                                    "description": "access token",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -185,8 +198,21 @@
                                             "example": "OK"
                                         },
                                         "data": {
-                                            "description": "access token",
-                                            "type": "string"
+                                            "properties": {
+                                                "title": {
+                                                    "description": "login prompt title",
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "description": "login prompt content",
+                                                    "type": "string"
+                                                },
+                                                "access_token": {
+                                                    "description": "access token",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
