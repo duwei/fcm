@@ -349,7 +349,7 @@ class FcmController extends Controller
         if ($ret['error_code'] != 0) {
             return $this->makeResponse(self::SERVER_ERROR, $ret['reason']);
         } elseif (!$ret['result']['isok']) {
-            return $this->makeResponse(self::VERIFY_FAILED, '姓名身份证号码不匹配');
+//            return $this->makeResponse(self::VERIFY_FAILED, '姓名身份证号码不匹配');
         }
 
 //        try {

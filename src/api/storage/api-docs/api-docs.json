@@ -326,6 +326,10 @@
                         "description": "Game user name",
                         "type": "string"
                     },
+                    "age": {
+                        "description": "Game user age",
+                        "type": "integer"
+                    },
                     "id_card": {
                         "description": "Game user id card",
                         "type": "string"

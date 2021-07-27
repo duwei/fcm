@@ -41,6 +41,11 @@ use Illuminate\Database\Eloquent\Model;
  *          description="Game user name"
  *      ),
  *      @OA\Property(
+ *          property="age",
+ *          type="integer",
+ *          description="Game user age"
+ *      ),
+ *      @OA\Property(
  *          property="id_card",
  *          type="string",
  *          description="Game user id card"

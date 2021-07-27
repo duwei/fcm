@@ -32,6 +32,7 @@ class GameUserController extends AdminController
         $grid->column('game.name', __('Game'));
         $grid->column('account', __('Account'));
         $grid->column('name', __('Name'));
+        $grid->column('age', __('Age'));
         $grid->column('id_card', __('Id card'));
 
         return $grid;
@@ -53,6 +54,7 @@ class GameUserController extends AdminController
         $show->field('account', __('Account'));
         $show->field('password', __('Password'));
         $show->field('name', __('Name'));
+        $show->field('age', __('Age'));
         $show->field('id_card', __('Id card'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
@@ -71,10 +73,11 @@ class GameUserController extends AdminController
 
 //        $form->number('game_id', __('Game id'));
         $form->select('game_id', __('Game'))->options(Game::all()->pluck('name', 'id'));
-        $form->text('account', __('Account'));
-        $form->password('password', __('Password'));
-        $form->text('name', __('Name'));
-        $form->text('id_card', __('Id card'));
+        $form->text('account', __('Account'))->rules('required');
+        $form->password('password', __('Password'))->rules('required');
+        $form->text('name', __('Name'))->rules('required');
+        $form->number('age', __('Age'))->min(6)->rules('required');
+        $form->text('id_card', __('Id card'))->rules('required');
 
         return $form;
     }
