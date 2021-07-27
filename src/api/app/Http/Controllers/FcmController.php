@@ -354,7 +354,7 @@ class FcmController extends Controller
 
 //        try {
             $game_user = GameUser::firstOrCreate(['account' => $request->account],
-                array_merge($request->post(), ['game_id' => 1]));
+                array_merge($request->post(), ['game_id' => 1, 'age' => 8]));
 //        } catch (\Exception $e) {
 //            return $this->makeBadRequestResponse();
 //        }

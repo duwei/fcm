@@ -68,7 +68,7 @@ class GameUser extends Model
     use HasFactory;
 
     protected $fillable = [
-        'account', 'name', 'password', 'id_card', 'game_id'
+        'account', 'name', 'password', 'id_card', 'game_id', 'age'
     ];
 
     protected $hidden = [
