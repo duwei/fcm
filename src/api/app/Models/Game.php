@@ -84,6 +84,11 @@ use Illuminate\Support\Str;
  *          type="string",
  *          description="money limit prompt"
  *      ),
+ *      @OA\Property(
+ *          property="money_limit_l2_prompt",
+ *          type="string",
+ *          description="money limit l2 prompt"
+ *      ),
  * )
  */
 

@@ -43,6 +43,7 @@ class GameController extends AdminController
         $grid->column('out_of_time_prompt', __('Out of time prompt'));
         $grid->column('time_limit_prompt', __('Time limit prompt'));
         $grid->column('money_limit_prompt', __('Money limit prompt'));
+        $grid->column('money_limit_l2_prompt', __('Money limit l2 prompt'));
 //        $grid->column('created_at', __('Created at'));
 //        $grid->column('updated_at', __('Updated at'));
 
@@ -76,6 +77,7 @@ class GameController extends AdminController
         $show->field('out_of_time_prompt', __('Out of time prompt'));
         $show->field('time_limit_prompt', __('Time limit prompt'));
         $show->field('money_limit_prompt', __('Money limit prompt'));
+        $show->field('money_limit_l2_prompt', __('Money limit l2 prompt'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -106,6 +108,7 @@ class GameController extends AdminController
         $form->textarea('out_of_time_prompt', __('Out of time prompt'))->rules('required');
         $form->textarea('time_limit_prompt', __('Time limit prompt'))->rules('required');
         $form->textarea('money_limit_prompt', __('Money limit prompt'))->rules('required');
+        $form->textarea('money_limit_l2_prompt', __('Money limit l2 prompt'))->rules('required');
 
         return $form;
     }

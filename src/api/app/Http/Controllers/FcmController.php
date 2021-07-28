@@ -69,8 +69,8 @@ class FcmController extends Controller
 
     private function getRemain($game_user)
     {
-        $game_user['remain_time_quota'] = 2.5;
-        $game_user['remain_money_quota'] = 100;
+//        $game_user['remain_time_quota'] = 2.5;
+//        $game_user['remain_money_quota'] = 100;
         return $game_user;
     }
 

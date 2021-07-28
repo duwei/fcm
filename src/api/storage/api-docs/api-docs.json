@@ -287,6 +287,10 @@
                     "money_limit_prompt": {
                         "description": "money limit prompt",
                         "type": "string"
+                    },
+                    "money_limit_l2_prompt": {
+                        "description": "money limit l2 prompt",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -333,14 +337,6 @@
                     "id_card": {
                         "description": "Game user id card",
                         "type": "string"
-                    },
-                    "remain_time_quota": {
-                        "description": "remaining time quota",
-                        "type": "number"
-                    },
-                    "remain_money_quota": {
-                        "description": "remaining money quota",
-                        "type": "number"
                     }
                 },
                 "type": "object"
