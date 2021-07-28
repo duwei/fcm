@@ -45,7 +45,7 @@ export default {
         }
       }).then((response) => {
         if (response.data.code === 0) {
-          if (response.data.data.title !== '') {
+          if (response.data.data.title) {
             Dialog.alert({
               title: response.data.data.title,
               message: response.data.data.content

@@ -234,12 +234,14 @@ class FcmController extends Controller
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
-            $content = Game::find(1)->start_prompt;
             $ret = [
-                'title' => '公告',
-                'content' => $content,
                 'access_token' => $access_token
             ];
+            if ($game_user->age < 18) {
+                $content = Game::find(1)->start_prompt;
+                $ret['title'] = '未成年防沉迷';
+                $ret['content'] = $content;
+            }
             return $this->makeApiResponse($ret);
         }
         return $this->makeBadRequestResponse();
@@ -346,15 +348,22 @@ class FcmController extends Controller
             return $this->makeBadRequestResponse();
         }
         $ret = verify_id_card($request->name, $request->id_card);
+        $age = 8;
         if ($ret['error_code'] != 0) {
             return $this->makeResponse(self::SERVER_ERROR, $ret['reason']);
         } elseif (!$ret['result']['isok']) {
 //            return $this->makeResponse(self::VERIFY_FAILED, '姓名身份证号码不匹配');
+        } elseif ($ret['result']['IdCardInfor'] && $ret['result']['IdCardInfor']['birthday'] ) {
+            $start = date_create_from_format('Y-m-d',$ret['result']['IdCardInfor']['birthday']);
+            $now = date_create();
+            $diff = $start->diff($now);
+            $age = $diff->format('%y');
         }
+        // todo: 身份证号码唯一绑定
 
 //        try {
             $game_user = GameUser::firstOrCreate(['account' => $request->account],
-                array_merge($request->post(), ['game_id' => 1, 'age' => 8]));
+                array_merge($request->post(), ['game_id' => 1, 'age' => $age]));
 //        } catch (\Exception $e) {
 //            return $this->makeBadRequestResponse();
 //        }
@@ -362,12 +371,14 @@ class FcmController extends Controller
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
-            $content = Game::find(1)->start_prompt;
             $ret = [
-                'title' => '公告',
-                'content' => $content,
                 'access_token' => $access_token
             ];
+            if ($age < 18) {
+                $content = Game::find(1)->start_prompt;
+                $ret['title'] = '未成年防沉迷';
+                $ret['content'] = $content;
+            }
             return $this->makeApiResponse($ret);
         } else {
             return $this->makeResponse(self::DUPLICATED, '重复注册');
