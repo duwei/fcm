@@ -24,4 +24,5 @@ $router->group([], function () use ($router) {
     $router->post('logout', 'FcmController@logout');
     $router->post('get_user', 'FcmController@getUser');
     $router->get('success', 'FcmController@success');
+    $router->get('agreement', 'FcmController@agreement');
 });

@@ -41,6 +41,8 @@ class FcmController extends Controller
     const DUPLICATED          = 4;
     const SERVER_ERROR        = 5;
     const VERIFY_FAILED       = 6;
+    const OUT_OF_TIME         = 7;
+    const LOGIN_FAILED        = 8;
 
     private function makeResponse($code, $msg, $data = null)
     {
@@ -226,11 +228,23 @@ class FcmController extends Controller
             return $this->makeBadRequestResponse();
         }
 
+        $game = Game::findOrFail(1);
         $game_user = GameUser::where('account', $request->account)->first();
         if ($game_user && app('hash')->check($request->password, $game_user->password))
         {
             $prev_token = Redis::get($game_user->account);
             Redis::del($prev_token);
+
+            if ($game_user->age < 18) {
+                $open_time = date_create_from_format('H:i:s', $game->open_time);
+                $close_time = date_create_from_format('H:i:s', $game->close_time);
+                $now = date_create();
+//                return $this->makeResponse(self::OUT_OF_TIME, date_format($now, 'H i s'));
+                if ($now < $open_time || $now > $close_time) {
+                    return $this->makeResponse(self::OUT_OF_TIME, $game->out_of_time_prompt);
+                }
+            }
+
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
@@ -238,13 +252,13 @@ class FcmController extends Controller
                 'access_token' => $access_token
             ];
             if ($game_user->age < 18) {
-                $content = Game::find(1)->start_prompt;
+                $content = $game->start_prompt;
                 $ret['title'] = '未成年防沉迷';
                 $ret['content'] = $content;
             }
             return $this->makeApiResponse($ret);
         }
-        return $this->makeBadRequestResponse();
+        return $this->makeResponse(self::LOGIN_FAILED, '登陆失败');
     }
 
     /**
@@ -348,6 +362,7 @@ class FcmController extends Controller
             return $this->makeBadRequestResponse();
         }
         $ret = verify_id_card($request->name, $request->id_card);
+        $game = Game::findOrFail(1);
         $age = 8;
         if ($ret['error_code'] != 0) {
             return $this->makeResponse(self::SERVER_ERROR, $ret['reason']);
@@ -368,6 +383,16 @@ class FcmController extends Controller
 //            return $this->makeBadRequestResponse();
 //        }
         if ($game_user->wasRecentlyCreated) {
+            if ($game_user->age < 18) {
+                $open_time = date_create_from_format('H:i:s', $game->open_time);
+                $close_time = date_create_from_format('H:i:s', $game->close_time);
+                $now = date_create();
+//                return $this->makeResponse(self::OUT_OF_TIME, date_format($now, 'H i s'));
+                if ($now < $open_time || $now > $close_time) {
+                    $prompt = "注册成功<br>" . $game->out_of_time_prompt;
+                    return $this->makeResponse(self::OUT_OF_TIME, $prompt);
+                }
+            }
             $access_token = Str::uuid()->toString();
             Redis::set($access_token, $game_user->account);
             Redis::set($game_user->account, $access_token);
@@ -385,5 +410,10 @@ class FcmController extends Controller
         }
     }
     public function success(){
+    }
+
+    public function agreement(){
+        $game = Game::findOrFail(1);
+        return $game->agreement;
     }
 }

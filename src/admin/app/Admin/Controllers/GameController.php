@@ -29,7 +29,7 @@ class GameController extends AdminController
 //        $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
         $grid->column('uuid', __('Uuid'));
-        $grid->column('key', __('Key'));
+//        $grid->column('key', __('Key'));
         $grid->column('min_age', __('Min age'));
         $grid->column('open_time', __('Open time'));
         $grid->column('close_time', __('Close time'));
@@ -44,6 +44,7 @@ class GameController extends AdminController
         $grid->column('time_limit_prompt', __('Time limit prompt'));
         $grid->column('money_limit_prompt', __('Money limit prompt'));
         $grid->column('money_limit_l2_prompt', __('Money limit l2 prompt'));
+        $grid->column('agreement', __('Agreement'));
 //        $grid->column('created_at', __('Created at'));
 //        $grid->column('updated_at', __('Updated at'));
 
@@ -78,6 +79,7 @@ class GameController extends AdminController
         $show->field('time_limit_prompt', __('Time limit prompt'));
         $show->field('money_limit_prompt', __('Money limit prompt'));
         $show->field('money_limit_l2_prompt', __('Money limit l2 prompt'));
+        $show->field('agreement', __('Agreement'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -109,6 +111,7 @@ class GameController extends AdminController
         $form->textarea('time_limit_prompt', __('Time limit prompt'))->rules('required');
         $form->textarea('money_limit_prompt', __('Money limit prompt'))->rules('required');
         $form->textarea('money_limit_l2_prompt', __('Money limit l2 prompt'))->rules('required');
+        $form->textarea('agreement', __('Agreement'))->rules('required');
 
         return $form;
     }

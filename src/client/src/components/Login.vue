@@ -58,7 +58,7 @@ export default {
         } else {
           Dialog.alert({
             title: '提示',
-            message: '登陆失败'
+            message: response.data.msg
           }).then(() => {
             // on close
           })
