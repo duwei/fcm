@@ -291,6 +291,10 @@
                     "money_limit_l2_prompt": {
                         "description": "money limit l2 prompt",
                         "type": "string"
+                    },
+                    "agreement": {
+                        "description": "game agreement",
+                        "type": "string"
                     }
                 },
                 "type": "object"

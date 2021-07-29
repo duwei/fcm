@@ -89,6 +89,11 @@ use Illuminate\Support\Str;
  *          type="string",
  *          description="money limit l2 prompt"
  *      ),
+ *      @OA\Property(
+ *          property="agreement",
+ *          type="string",
+ *          description="game agreement"
+ *      ),
  * )
  */
 
