@@ -8,7 +8,7 @@ import Vant from 'vant'
 Vue.use(Vant)
 
 Vue.config.productionTip = false
-
+/* git test */
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
