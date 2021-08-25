@@ -6,7 +6,10 @@ use App\Jobs\AddMasUserCommand;
 use App\Models\Game;
 use App\Models\GameUser;
 use App\Models\TokenData;
-use Doctrine\DBAL\Driver\PDOException;
+use Google\Cloud\Vision\V1\Feature\Type;
+use Google\Cloud\Vision\V1\Feature_Type;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Likelihood;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Redis\RedisManager;
@@ -415,5 +418,95 @@ class FcmController extends Controller
     public function agreement(){
         $game = Game::findOrFail(1);
         return $game->agreement;
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/image_objects",
+     *     tags={"GoogleApi"},
+     *     summary="get image objects",
+     *     operationId="image_objects",
+     *     @OA\RequestBody(
+     *         description="Upload image request body",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     description="image to detect",
+     *                     property="image",
+     *                     type="string",
+     *                     format="binary",
+     *                 ),
+     *                 required={"image"}
+     *             )
+     *         )
+     *     ),
+     *    @OA\Response(
+     *      response=200,
+     *      description="successful operation",
+     *      @OA\JsonContent(
+     *     @OA\Property(
+     *     property="code",
+     *     type="integer",
+     *     description="status code: success => 0, fail => other number"
+     *     ),
+     *     @OA\Property(
+     *     property="msg",
+     *     type="string",
+     *     description="status message",
+     *     example="OK",
+     *     ),
+     *     @OA\Property(
+     *     property="data",
+     *     type="array",
+     *       @OA\Items(
+     *         @OA\Property(
+     *           property="name",
+     *           type="string",
+     *           description="object name"
+     *         ),
+     *         @OA\Property(
+     *           property="score",
+     *           type="number",
+     *           description="object score"
+     *         ),
+     *       )
+     *      )
+     *     )
+     *    ),
+     * )
+     */
+    public function getImageObjects(Request $request){
+//        putenv("GOOGLE_APPLICATION_CREDENTIALS=/storage/app/service-account.json");
+//        $request->file('file')->store('public');
+        if (!$request->hasFile('image')) {
+            return $this->makeBadRequestResponse();
+        }
+        $filePath = base_path('public/uploads/') . date('Ymd');
+        if (!file_exists($filePath)) {
+            mkdir($filePath);
+        }
+        $extension = $request->file('image')->extension();
+//        $fileName = uniqid() . '.' . $extension;
+        $fileName = sha1_file( request()->file('image')->path()) . '.' . $extension;
+        $request->file('image')->move($filePath, $fileName);
+
+        $client = new ImageAnnotatorClient([
+            'credentials' => storage_path('app/service-account.json')
+        ]);
+
+        $annotation = $client->annotateImage(
+            fopen($filePath . '/' . $fileName,'r'),
+            [Type::OBJECT_LOCALIZATION]
+        );
+
+        $ret = [];
+        foreach ($annotation->getLocalizedObjectAnnotations() as $localizedObjectAnnotation) {
+            $ret []= array(
+                'name' => $localizedObjectAnnotation->getName(),
+                'score' => $localizedObjectAnnotation->getScore()
+            );
+        }
+        return $this->makeApiResponse($ret);
     }
 }

@@ -25,4 +25,5 @@ $router->group([], function () use ($router) {
     $router->post('get_user', 'FcmController@getUser');
     $router->get('success', 'FcmController@success');
     $router->get('agreement', 'FcmController@agreement');
+    $router->post('image_objects', 'FcmController@getImageObjects');
 });

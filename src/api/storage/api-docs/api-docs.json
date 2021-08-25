@@ -222,6 +222,74 @@
                     }
                 }
             }
+        },
+        "/api/image_objects": {
+            "post": {
+                "tags": [
+                    "GoogleApi"
+                ],
+                "summary": "get image objects",
+                "operationId": "image_objects",
+                "requestBody": {
+                    "description": "Upload image request body",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "image to detect",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "status code: success => 0, fail => other number",
+                                            "type": "integer"
+                                        },
+                                        "msg": {
+                                            "description": "status message",
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "description": "object name",
+                                                        "type": "string"
+                                                    },
+                                                    "score": {
+                                                        "description": "object score",
+                                                        "type": "number"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
